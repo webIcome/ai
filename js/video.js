@@ -34,6 +34,7 @@ function addVideoBlocks(videoContents) {
             video.setAttribute("width", "100%");
             video.setAttribute("controls", "controls");
             video.setAttribute("src", videoContent.src);
+            video.setAttribute("poster", videoContent.poster);
             title.setAttribute("class", "title");
             title.appendChild(document.createTextNode(videoContent.title));
             description.setAttribute("class", "description");
