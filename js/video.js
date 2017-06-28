@@ -35,6 +35,7 @@ function addVideoBlocks(videoContents) {
             video.setAttribute("controls", "controls");
             video.setAttribute("src", videoContent.src);
             video.setAttribute("poster", videoContent.poster);
+            video.setAttribute("preload", "none");
             title.setAttribute("class", "title");
             title.appendChild(document.createTextNode(videoContent.title));
             description.setAttribute("class", "description");
