@@ -55,6 +55,9 @@ ul {
     height: 20px;
     line-height:20px;
     font-size: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis
 }
 
 .video .title {
