@@ -3,18 +3,21 @@ ul {
 }
 
 .header {
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
+    background-color: #fff;
+    z-index: 9999;
 }
 
 .nav {
+    flex: auto;
     display: flex;
     flex-direction: row;
-    width: 100%;
     padding: 0;
     margin: 0;
 }
@@ -35,6 +38,7 @@ ul {
     padding: 0 5px;
     text-decoration: none;
     color: #333;
+    min-width: 60px;
 }
 
 .nav .active {
@@ -42,9 +46,10 @@ ul {
 }
 
 .active span.line {
-    border-bottom: 5px solid red;
+    border-top: 3px solid red;
     flex: none;
     width: 30px;
+    height: 10px;
 }
 
 .container {

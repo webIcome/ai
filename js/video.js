@@ -4,18 +4,11 @@
 /**
  * Created by webicome on 2017/6/28.
  */
-function addVideoBlocks(videoContents) {
+function generateVideosArr(videoContents) {
 
-    let container = document.querySelector(".container");
-    appendVideo(container, createVideosNodes(videoContents));
-
-    function appendVideo(parent, videos) {
-        parent.innerHTML = null;
-        for (let index in videos) {
-            let video = videos[index];
-            parent.appendChild(video);
-        }
-    }
+    return videoContents.map(function (video) {
+        return createVideosNodes(video.contents);
+    });
 
     function createVideosNodes(videoContents) {
 
