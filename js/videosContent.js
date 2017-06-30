@@ -36,5 +36,5 @@ let videos = (function () {
             }
         ]
     };
-    return [favorite, latest, latest, latest, latest, latest];
+    return [latest, latest, latest, latest, latest, latest];
 })();

@@ -11,7 +11,7 @@ ul {
     overflow: hidden;
     box-sizing: border-box;
     background-color: #fff;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .nav {

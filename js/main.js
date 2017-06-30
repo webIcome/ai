@@ -2,82 +2,89 @@
  * Created by webicome on 2017/6/28.
  */
 function main() {
-    appendNavNodes(createNavNodes(videos));
-    let videoNodes = generateVideosArr(videos);
-    processHeader(videoNodes);
-    moveElement()
-}
-
-function processHeader(videoNodes) {
-    let header = document.querySelector(".header");
-    let tabs = header.querySelectorAll("a");
-    init(tabs, videoNodes);
-    for (let i = 0; i < tabs.length; i++) {
-        let tab = tabs[i];
-        tab.onclick = function () {
-            for (let j = 0; j < tabs.length; j++) {
-                tabs[j].setAttribute("class", '')
-            }
-            tab.setAttribute("class", "active");
-            appendVideos(videoNodes[i]);
-        }
-    }
-
-}
-
-function init(tabs, videoNodes) {
-    tabs[0].setAttribute("class", "active");
-    appendVideos(videoNodes[0]);
-}
-
-function appendNavNodes(navNodes) {
+    let container = document.querySelector(".container");
     let header = document.querySelector(".header");
     let nav = header.querySelector(".nav");
-    nav.innerHTML = navNodes;
+    appendNavNodes(nav, createNavNodes(videos));
+    let videoNodes = generateVideosArr(videos);
+    let tabs = header.querySelectorAll("a");
+    addTabsClickEvent(tabs, container, videoNodes);
+    addNavTouchEvent(nav);
+}
+
+function addTabsClickEvent(tabs, container, videoNodes) {
+    initVideoContent(container, videoNodes);
+    for (let i = 0; i < tabs.length; i++) {
+        let tab = tabs[i];
+        tab.addEventListener("click", function () {
+            tabs.forEach(function (tab, p2, p3) { tab.setAttribute("class", "") });
+            tab.setAttribute("class", "active");
+            appendVideos(container, videoNodes[i]);
+        })
+
+    }
+
+    function initVideoContent(parent, videoNodes) {
+        appendVideos(parent, videoNodes[0]);
+    }
+}
+
+function appendNavNodes(parent, navNodes) {
+    parent.innerHTML = navNodes;
 
 }
 
 
 function createNavNodes(videoContents) {
-    return videoContents.map(function (videoContent) {
-        return getNavNodes(videoContent);
+    return videoContents.map(function (videoContent, index) {
+        return getNavNodes(videoContent, index);
     }).join('');
 
-    function getNavNodes(videoContent) {
-        return '<li><a title="' + videoContent.enName + '" class="" href="#">' + videoContent.name + '<span class="line"></span></a></li>'
+    function getNavNodes(videoContent, index) {
+        return '<li><a title="' + videoContent.enName + '" class="' + ((index == 0) ? "active" : "") + '" href="#">' + videoContent.name + '<span class="line"></span></a></li>'
     }
 }
 
 
-
-function appendVideos(videos) {
-    let container = document.querySelector(".container");
-    container.innerHTML = null;
+function appendVideos(parent, videos) {
+    parent.innerHTML = null;
     for (let i = 0; i < videos.length; i++) {
-        container.appendChild(videos[i]);
+        parent.appendChild(videos[i]);
     }
 }
 
 
-function moveElement() {
-    let header = document.querySelector(".header");
-    let nav = header.querySelector(".nav");
-    let width = nav.style.width;
-    let startPos;
-    let endPos;
+function addNavTouchEvent(nav) {
+    let width = nav.offsetWidth;
+    let parentNodeWidth = nav.parentNode.offsetWidth;
+    let startPos = 0;
+    let endPos = 0;
+    let moveLength = 0;
+
     nav.addEventListener("touchstart", function (event) {
         startPos = event.targetTouches[0].pageX;
     });
 
     nav.addEventListener("touchend", function (event) {
-        if (endPos < 0 || (width - endPos) < document.body.clientWidth) {
-            this.style.marginLeft = 0 + "px";
+        endPos += moveLength;
+        if (endPos >= 0 && parseInt(this.style.marginLeft) > 0) {
+            endPos = 0;
+        } else if (endPos < (parentNodeWidth - width)) {
+            endPos = parentNodeWidth - width;
         }
+        // this.style.marginRight = -endPos + "px";
+        this.style.marginLeft = endPos + "px";
+
+        startPos = 0;
+        moveLength = 0;
     });
+
     nav.addEventListener("touchmove", function (event) {
         let touch = event.targetTouches[0];
-        endPos = touch.pageX - startPos;
-        this.style.marginLeft = endPos + "px";
+        moveLength = touch.pageX - startPos;
+        // this.style.marginRight = -(endPos + moveLength) + "px";
+        this.style.marginLeft = (endPos + moveLength) + "px";
+
     })
 }
 
