@@ -5,11 +5,14 @@ function main() {
     let container = document.querySelector(".container");
     let header = document.querySelector(".header");
     let nav = header.querySelector(".nav");
+    let slide = document.querySelector(".slide");
+    let point = document.querySelector(".slide-point");
     appendNavNodes(nav, createNavNodes(videos));
     let videoNodes = generateVideosArr(videos);
     let tabs = header.querySelectorAll("a");
     addTabsClickEvent(tabs, container, videoNodes);
     addNavTouchEvent(nav);
+    addSlideEvent(slide, point);
 }
 
 function addTabsClickEvent(tabs, container, videoNodes) {
@@ -86,6 +89,81 @@ function addNavTouchEvent(nav) {
         this.style.marginLeft = (endPos + moveLength) + "px";
 
     })
+}
+
+function addSlideEvent(slide, point) {
+    let slideContent = slide.querySelector(".slide-content");
+    let points = point.querySelectorAll("span");
+    let width = slide.offsetWidth;
+    let startPos = 0;
+    let endPos = width;
+    let moveLength = 0;
+    let timer = null;
+
+    points[0].style.backgroundColor = "#ccc";
+
+    slideContent.addEventListener("touchstart", function (event) {
+        startPos = event.targetTouches[0].pageX;
+    });
+
+    slideContent.addEventListener("touchmove", function (evnet) {
+        let touch = event.targetTouches[0];
+        moveLength = touch.pageX - startPos;
+        this.style.marginLeft = -endPos + moveLength + "px";
+        this.style.marginRight = endPos - moveLength + "px";
+        clearInterval(timer);
+    });
+
+    slideContent.addEventListener("touchend", function (event) {
+        points[endPos / width - 1].style.backgroundColor = "#fff";
+
+        if (parseInt(moveLength) < 0  && -parseInt(moveLength) > 0.3*width) {
+            endPos += width;
+        }
+        if (parseInt(moveLength) > 0 && parseInt(moveLength) > 0.3*width) {
+            endPos -=width;
+        }
+        if (endPos == 0) {
+            endPos = points.length * width;
+        }
+
+        if (endPos == (points.length + 1) * width) {
+            endPos = width;
+        }
+        points[endPos / width - 1].style.backgroundColor = "#ccc";
+
+        this.style.marginLeft = -endPos + "px";
+        this.style.marginRight = endPos + "px";
+
+        startPos = 0;
+        moveLength = 0;
+        timer = setInterval(intervalHandle, 3000);
+
+    });
+    timer = setInterval(intervalHandle, 3000)
+
+    function intervalHandle() {
+        let count = 0;
+        function move() {
+            count = count + 20;
+            slideContent.style.marginRight = endPos + count + "px";
+            slideContent.style.marginLeft = -endPos - count + "px";
+            if (count < width) {
+                setTimeout(move, 20)
+            } else {
+                endPos += width;
+                points[endPos / width - 2].style.backgroundColor = "#fff";
+                if (endPos == (points.length + 1)*width) {
+                    endPos = width;
+                }
+                points[endPos / width -1].style.backgroundColor = "#ccc";
+                slideContent.style.marginLeft = -endPos + "px";
+                slideContent.style.marginRight = endPos + "px";
+            }
+        }
+        move();
+
+    }
 }
 
 main();

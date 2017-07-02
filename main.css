@@ -14,6 +14,46 @@ ul {
     z-index: 999;
 }
 
+.slide {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+.slide-content {
+    display: flex;
+    margin-left: -100%;
+    margin-right: 100%;
+}
+
+.slide-content img {
+    width: 100%;
+    height: 100%;
+    min-width:100%;
+    max-width: 100%;
+}
+
+.slide-point {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+
+.slide-point span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
 .nav {
     flex: auto;
     display: flex;
@@ -53,16 +93,15 @@ ul {
 }
 
 .container {
-    margin-top: 60px;
 }
 
 .video .title, .video .description {
     height: 20px;
-    line-height:20px;
+    line-height: 20px;
     font-size: 13px;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow:ellipsis
+    text-overflow: ellipsis
 }
 
 .video .title {
