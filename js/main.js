@@ -13,7 +13,7 @@ function main() {
     addTabsClickEvent(tabs, container, videoNodes);
 
     addSlideEvent(slide, point);
-    addNavTouchEvent(nav);
+    // addNavTouchEvent(nav);
 }
 
 function addTabsClickEvent(tabs, container, videoNodes) {
