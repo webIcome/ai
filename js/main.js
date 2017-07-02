@@ -11,8 +11,9 @@ function main() {
     let videoNodes = generateVideosArr(videos);
     let tabs = header.querySelectorAll("a");
     addTabsClickEvent(tabs, container, videoNodes);
-    addNavTouchEvent(nav);
+
     addSlideEvent(slide, point);
+    addNavTouchEvent(nav);
 }
 
 function addTabsClickEvent(tabs, container, videoNodes) {
@@ -106,7 +107,8 @@ function addSlideEvent(slide, point) {
         startPos = event.targetTouches[0].pageX;
     });
 
-    slideContent.addEventListener("touchmove", function (evnet) {
+    slideContent.addEventListener("touchmove", function (event) {
+
         let touch = event.targetTouches[0];
         moveLength = touch.pageX - startPos;
         this.style.marginLeft = -endPos + moveLength + "px";
