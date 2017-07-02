@@ -11,9 +11,8 @@ function main() {
     let videoNodes = generateVideosArr(videos);
     let tabs = header.querySelectorAll("a");
     addTabsClickEvent(tabs, container, videoNodes);
-
+    addNavTouchEvent(nav);
     addSlideEvent(slide, point);
-    // addNavTouchEvent(nav);
 }
 
 function addTabsClickEvent(tabs, container, videoNodes) {
@@ -142,7 +141,7 @@ function addSlideEvent(slide, point) {
         timer = setInterval(intervalHandle, 3000);
 
     });
-    timer = setInterval(intervalHandle, 3000)
+    timer = setInterval(intervalHandle, 3000);
 
     function intervalHandle() {
         let count = 0;
