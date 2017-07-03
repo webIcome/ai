@@ -107,7 +107,7 @@ function addSlideEvent(slide, point) {
     });
 
     slideContent.addEventListener("touchmove", function (event) {
-
+        event.preventDefault()；
         let touch = event.targetTouches[0];
         moveLength = touch.pageX - startPos;
         this.style.marginLeft = -endPos + moveLength + "px";
